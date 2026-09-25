@@ -323,17 +323,6 @@ The primary objective of ArtVista is to provide a **centralized online platform 
 
 ---
 
-## 👨‍💻 Project Information
-
-**Project Name:** ArtVista
-**Project Type:** Web-Based E-Commerce / Online Art Marketplace
-**Backend:** Java Spring Boot
-**Frontend:** HTML, CSS, JavaScript
-**Database:** PostgreSQL
-**Architecture:** MVC
-
----
-
 ## 📄 License
 
 This project is developed for **educational and academic purposes**.
