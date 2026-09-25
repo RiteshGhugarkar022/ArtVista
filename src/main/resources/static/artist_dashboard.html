@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ArtVista – Artist Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif; }
+    .glass { background: rgba(15,23,42,0.75); backdrop-filter: blur(18px); border: 1px solid rgba(148,163,184,0.35); }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-[#130927] via-[#36104D] to-[#FF4B91] text-slate-100">
+
+<!-- Navbar -->
+<header class="border-b border-white/10 bg-black/30 backdrop-blur">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-fuchsia-500 to-violet-500 flex items-center justify-center font-semibold text-xs">AV</div>
+      <div>
+        <h1 class="text-lg font-semibold">Artist Dashboard</h1>
+        <p class="text-[11px] text-slate-300 -mt-0.5">Manage your artworks & orders</p>
+      </div>
+    </div>
+    <a href="http://localhost:8080/login.html" class="text-xs px-3 py-1 rounded-full bg-slate-800 hover:bg-slate-700 transition">Logout</a>
+  </div>
+</header>
+
+<!-- Main -->
+<main class="max-w-6xl mx-auto px-4 py-6 space-y-10">
+
+  <!-- Upload Artwork -->
+  <section class="glass rounded-3xl p-6">
+    <h2 class="text-lg font-semibold mb-4">Upload New Artwork</h2>
+    
+    <form id="artForm" action="/artist/upload-art" method="post" enctype="multipart/form-data" class="grid md:grid-cols-2 gap-4 text-sm">
+      <div>
+        <label class="block mb-1 text-slate-300">Artwork Name</label>
+        <input name="artname" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+      </div>
+      <div>
+        <label class="block mb-1 text-slate-300">Price (₹)</label>
+        <input name="price" type="number" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+      </div>
+      <div class="md:col-span-2">
+        <label class="block mb-1 text-slate-300">Artwork Image</label>
+        <input type="file" name="image" required class="w-full text-xs"/>
+      </div>
+      <div class="md:col-span-2 flex justify-end">
+        <button class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-fuchsia-400 via-violet-400 to-sky-400 text-slate-900 font-semibold shadow-lg shadow-fuchsia-500/40 hover:translate-y-0.5 transition">
+          Upload Artwork
+        </button>
+      </div>
+    </form>
+
+  <script>
+async function uploadArt(e) {
+  e.preventDefault();
+
+  const form = document.getElementById("artForm");
+  const data = new FormData(form);
+
+  const res = await fetch("/api/artist/upload-art", {
+    method: "POST",
+    body: data
+  });
+
+  const text = await res.text();
+
+  if (text === "LOGIN_REQUIRED") {
+    alert("Session expired. Please login again.");
+    window.location.href = "/login.html";
+  } 
+  else if (text === "ART_UPLOADED") {
+    alert("Art uploaded successfully");
+    form.reset();
+  }
+}
+</script>
+
+  </section>
+
+  <!-- My Artworks -->
+  <section>
+    <h2 class="text-lg font-semibold mb-4">My Artworks</h2>
+    <div id="myArts" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+
+  <!-- Orders -->
+  <section>
+    <h2 class="text-lg font-semibold mb-4">Orders to Complete</h2>
+    <div id="artistOrders" class="space-y-4"></div>
+  </section>
+
+</main>
+
+<script>
+async function loadMyArts(){
+  const res = await fetch('/api/artist/my-arts');
+  const data = await res.json();
+  const box = document.getElementById('myArts');
+
+  if(!data || data.length === 0){
+    box.innerHTML = '<p class="text-slate-400 text-sm">You have not uploaded any artworks yet.</p>';
+    return;
+  }
+
+  data.forEach(a => {
+    box.insertAdjacentHTML('beforeend', `
+      <div class="glass rounded-3xl overflow-hidden">
+        <img src="/images/${a.imagepath}" class="h-44 w-full object-cover"/>
+        <div class="p-4 space-y-2">
+          <h3 class="font-semibold">${a.artname}</h3>
+          <p class="text-xs text-slate-300">₹${a.price}</p>
+          <div class="flex gap-2 pt-2">
+            <button onclick="deleteArt(${a.artid})" class="flex-1 px-3 py-2 rounded-xl bg-red-500/80 hover:bg-red-500 text-xs font-semibold">
+              Delete
+            </button>
+            <button onclick="updateArt(${a.artid})" class="flex-1 px-3 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-xs font-semibold">
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    `);
+  });
+}
+
+async function loadOrders(){
+  const res = await fetch('/api/orders/artist-orders');
+  const data = await res.json();
+  const box = document.getElementById('artistOrders');
+
+  if(!data || data.length === 0){
+    box.innerHTML = '<p class="text-slate-400 text-sm">No orders assigned yet.</p>';
+    return;
+  }
+
+  data.forEach(o => {
+    box.insertAdjacentHTML('beforeend', `
+      <div class="glass rounded-2xl p-4 flex justify-between items-center">
+        <div>
+          <p class="font-semibold text-sm">Order #${o.orderid}</p>
+          <p class="text-xs text-slate-300">Artwork: ${o.artname}</p>
+        </div>
+        <button onclick="completeOrder(${o.orderid})" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-400 to-green-500 text-slate-900 text-xs font-semibold">
+          Mark Completed
+        </button>
+      </div>
+    `);
+  });
+}
+/*
+function deleteArt(id){
+    fetch(`/api/art/${id}`, { method: 'DELETE' })
+        .then(()=>location.reload());
+}
+
+function deleteArt(id) {
+  fetch(`/api/artist/art/${id}`, { method: "DELETE" })
+    .then(() => location.reload());
+}*/
+
+function deleteArt(id){
+  fetch('/api/artist/art/' + id, { method: 'DELETE' })
+    .then(() => location.reload());
+}
+
+
+function updateArt(id){
+  const name = prompt("New name");
+  const price = prompt("New price");
+
+  fetch('/api/artist/art/' + id, {
+    method: 'PUT',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ artname: name, price: price })
+  }).then(() => location.reload());
+}
+
+
+function completeOrder(id){
+  fetch(`/api/artist/complete-order/${id}`, { method: 'POST' })
+    .then(() => location.reload());
+}
+
+loadMyArts();
+loadOrders();
+</script>
+
+</body>
+</html>

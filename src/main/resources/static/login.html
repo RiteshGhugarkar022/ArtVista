@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ArtVista – Login / Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif; }
+    .glass { background: rgba(15,23,42,0.75); backdrop-filter: blur(18px); border: 1px solid rgba(148,163,184,0.4); }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-[#130927] via-[#36104D] to-[#FF4B91] flex items-center justify-center px-4">
+
+<div class="max-w-5xl w-full grid md:grid-cols-2 gap-8 items-center">
+  <!-- Left text / preview -->
+  <div class="hidden md:block text-slate-50 space-y-4">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/30 text-xs">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      Secure roles: Admin • Artist • Customer
+    </div>
+    <h1 class="text-3xl font-semibold leading-snug">Sign in to <span class="bg-gradient-to-r from-fuchsia-300 via-violet-200 to-sky-300 bg-clip-text text-transparent">ArtVista</span></h1>
+   <!-- <p class="text-sm text-slate-200/80 max-w-md">
+      Use your login name and password to access the correct dashboard. New users can register quickly using the role selector on the right.
+    </p>
+    <ul class="text-xs text-slate-200/90 space-y-1">
+      <li>• Admin manages artists, paintings & verifications.</li>
+      <li>• Artist uploads new paintings with images.</li>
+      <li>• Customer explores gallery and makes dummy payments.</li>
+    </ul> -->
+  </div>
+
+  <!-- Right auth card -->
+  <div class="glass rounded-3xl p-6 md:p-7 shadow-2xl w-full max-w-md mx-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold text-slate-50">Welcome back</h2>
+      <span class="text-[11px] text-slate-300">ArtVista Login</span>
+    </div>
+
+    <form action="/doLogin" method="post" class="space-y-4 text-sm">
+      <div>
+        <label class="block text-slate-200 mb-1">Login as</label>
+        <select name="role" class="w-full px-3 py-2.5 rounded-xl bg-slate-900/60 border border-slate-600 text-slate-100">
+          <option value="admin">Admin</option>
+          <option value="artist">Artist</option>
+          <option value="customer">Customer</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-slate-200 mb-1">Login name</label>
+        <input name="loginname" required placeholder="Enter your login name" class="w-full px-3 py-2.5 rounded-xl bg-slate-900/60 border border-slate-600 text-slate-100 placeholder:text-slate-500"/>
+      </div>
+
+      <div>
+        <label class="block text-slate-200 mb-1">Password</label>
+        <input name="password" type="password" required placeholder="••••••••" class="w-full px-3 py-2.5 rounded-xl bg-slate-900/60 border border-slate-600 text-slate-100"/>
+      </div>
+
+      <button type="submit" class="w-full mt-2 py-2.5 rounded-xl bg-gradient-to-r from-fuchsia-400 via-violet-400 to-sky-400 text-slate-900 font-semibold shadow-lg shadow-fuchsia-500/40 hover:translate-y-0.5 transition">
+        Sign in
+      </button>
+    </form>
+
+    <div class="mt-5 border-t border-slate-600/60 pt-4 text-xs text-slate-300">
+      <p class="mb-2">New to ArtVista?</p>
+      <a href="/register.html" class="inline-flex items-center gap-2 text-fuchsia-300 hover:text-fuchsia-100">
+        Create a new account
+        <span class="text-[16px] leading-none">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

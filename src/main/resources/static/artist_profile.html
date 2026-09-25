@@ -1,0 +1,23 @@
+
+<!doctype html><html><head><meta charset="utf-8"><title>Artist Profile</title>
+<link rel="stylesheet" href="/styles.css"></head>
+<body>
+<h1>Artist Profile</h1>
+<div id="info"></div>
+<h2>All artworks by this artist</h2>
+<div id="arts"></div>
+<script>
+const id=new URLSearchParams(location.search).get("id");
+async function load(){
+ const ar=await fetch('/api/artist/'+id).then(r=>r.json());
+ document.getElementById('info').innerHTML=`<h3>${ar.artistName}</h3><p>${ar.artistemail}<br>${ar.artistphone}</p>`;
+ const arts=await fetch('/api/arts/byArtist/'+id).then(r=>r.json());
+ const c=document.getElementById('arts');
+ arts.forEach(a=>{
+   c.innerHTML+=`<div class='art'><h4>${a.artname}</h4>
+   <img src='/images/${a.imagepath}' style='max-width:150px;'></div>`;
+ });
+}
+load();
+</script>
+</body></html>

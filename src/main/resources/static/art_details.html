@@ -1,0 +1,124 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Art Details</title>
+</head>
+<body>
+
+<h1>Art Details</h1>
+<div id="box">Loading...</div>
+<!--
+<script>
+const id = new URLSearchParams(location.search).get("id");
+
+async function load() {
+  const a = await fetch('/api/arts/' + id).then(r => r.json());
+  const artist = await fetch('/api/artist/' + a.artistId).then(r => r.json());
+  
+  document.getElementById('box').innerHTML = `
+    <img src="/images/${a.imagepath}" width="300">
+    <h2>${a.artname}</h2>
+    <p>Price: ₹${a.price}</p>
+
+    <h3>Artist Details</h3>
+    <p>
+      Name: ${artist.artistName}<br>
+      Email: ${artist.artistemail}<br>
+      Phone: ${artist.artistphone}
+    </p>
+
+    <button onclick="buy()">Buy</button>
+  `;
+}
+
+function buy(){
+  location.href = `/payment.html?artid=${id}`;
+}
+
+load();
+</script> -->
+
+<button onclick="buy()">Buy</button>
+
+<script>
+const id = new URLSearchParams(location.search).get("id");
+
+async function buy() {
+  const payload = {
+    artid: id,
+    customerId: 2
+  };
+
+
+async function load() {
+  const a = await fetch('/api/arts/' + id).then(r => r.json());
+  const artist = await fetch('/api/artist/' + a.artistId).then(r => r.json());
+  
+  document.getElementById('box').innerHTML = `
+    <img src="/images/${a.imagepath}" width="300">
+    <h2>${a.artname}</h2>
+    <p>Price: ₹${a.price}</p>
+
+    <h3>Artist Details</h3>
+    <p>
+      Name: ${artist.artistName}<br>
+      Email: ${artist.artistemail}<br>
+      Phone: ${artist.artistphone}
+    </p>
+  `;
+  }
+
+  const res = await fetch('/api/orders/place', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  const order = await res.json();
+  location.href = `/payment.html?artid=${id}`;
+
+}
+
+load();
+</script> 
+<!--
+<script>
+const id = new URLSearchParams(location.search).get("id");
+
+async function load() {
+  const a = await fetch(`/api/arts/${id}`).then(r => r.json());
+  const artist = await fetch(`/api/artist/${a.artistId}`).then(r => r.json());
+
+  document.getElementById("box").innerHTML = `
+    <img src="/images/${a.imagepath}" width="300">
+    <h2>${a.artname}</h2>
+    <p>Price: ₹${a.price}</p>
+
+    <h3>Artist Details</h3>
+    <p>
+      Name: ${artist.artistName}<br>
+      Email: ${artist.artistemail}<br>
+      Phone: ${artist.artistphone}
+    </p>
+
+    <button onclick="placeOrder(${a.artid})">Buy</button>
+  `;
+}
+
+async function placeOrder(artid) {
+  const res = await fetch(`/api/orders/place?artid=${artid}`, {
+    method: "POST"
+  });
+
+  const order = await res.json();
+  location.href = `/payment.html?orderid=${order.orderid}`;
+}
+
+load();
+</script>
+-->
+
+</body>
+</html>

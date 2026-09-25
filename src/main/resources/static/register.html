@@ -1,0 +1,186 @@
+ <!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ArtVista – Create Account</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif; }
+    .glass { background: rgba(15,23,42,0.85); backdrop-filter: blur(18px); border: 1px solid rgba(148,163,184,0.6); }
+    .tab-active { background: linear-gradient(135deg,#f472b6,#a855f7); color:#020617; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-[#100725] via-[#3b0f57] to-[#ff4b91] flex items-center justify-center px-4">
+
+<div class="max-w-5xl w-full">
+  <header class="flex items-center justify-between mb-4 text-slate-100 text-xs">
+    <a href="/index.html" class="inline-flex items-center gap-2 text-slate-200 hover:text-white">
+      <span class="text-lg">←</span> Back to Home
+    </a>
+    <span>ArtVista • Registration</span>
+  </header>
+
+  <div class="glass rounded-3xl p-6 md:p-8 shadow-2xl">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+      <div>
+        <h1 class="text-2xl font-semibold text-slate-50">Create your ArtVista account</h1>
+        <p class="text-xs text-slate-300 max-w-md">Choose your role and fill all mandatory fields (marked with *). Gender is optional for all roles.</p>
+      </div>
+      <a href="/login.html" class="text-xs text-fuchsia-200 hover:text-fuchsia-50">Already have an account? Login</a>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex gap-2 mb-5 text-xs">
+      <button data-tab="admin" class="tab-btn flex-1 px-3 py-2 rounded-full bg-slate-900/70 text-slate-200 border border-slate-600">Admin</button>
+      <button data-tab="artist" class="tab-btn flex-1 px-3 py-2 rounded-full bg-slate-900/70 text-slate-200 border border-slate-600">Artist</button>
+      <button data-tab="customer" class="tab-btn flex-1 px-3 py-2 rounded-full bg-slate-900/70 text-slate-200 border border-slate-600">Customer</button>
+    </div>
+
+    <!-- Forms -->
+    <div id="tab-admin" class="tab-panel space-y-4 text-sm">
+      <form method="post" action="/register" class="grid md:grid-cols-2 gap-4">
+        <input type="hidden" name="role" value="admin"/>
+        <div class="md:col-span-2">
+          <label class="block text-slate-100 text-xs mb-1">Full name *</label>
+          <input name="adminName" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div>
+          <label class="block text-slate-100 text-xs mb-1">Login name *</label>
+          <input name="adminLoginName" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div>
+          <label class="block text-slate-100 text-xs mb-1">Email *</label>
+          <input type="email" name="adminemail" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div>
+          <label class="block text-slate-100 text-xs mb-1">Password *</label>
+          <input type="password" name="adminpassword" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div>
+          <label class="block text-slate-100 text-xs mb-1">Phone *</label>
+          <input name="adminphone" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-slate-100 text-xs mb-1">Address *</label>
+          <textarea name="adminaddress" required rows="2" class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"></textarea>
+        </div>
+        <div>
+          <label class="block text-slate-100 text-xs mb-1">Gender (optional)</label>
+          <input name="admingender" class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div>
+          <label class="block text-fuchsia-200 text-xs mb-1">Admin secret key *</label>
+          <input name="adminKey" required placeholder="ArtVista@Admin" class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-fuchsia-500 text-slate-100"/>
+        </div>
+        <div class="md:col-span-2 flex justify-end pt-2">
+          <button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-fuchsia-400 via-violet-400 to-sky-400 text-slate-950 font-semibold shadow-lg shadow-fuchsia-500/40 hover:translate-y-0.5 transition">Register as Admin</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="tab-artist" class="tab-panel hidden space-y-4 text-sm">
+      <form method="post" action="/register" class="grid md:grid-cols-2 gap-4">
+        <input type="hidden" name="role" value="artist"/>
+        <div class="md:col-span-2">
+          <label class="block text-slate-100 text-xs mb-1">Artist name *</label>
+          <input name="artistName" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div>
+          <label class="block text-slate-100 text-xs mb-1">Login name *</label>
+          <input name="artistLoginName" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div>
+          <label class="block text-slate-100 text-xs mb-1">Email *</label>
+          <input type="email" name="artistemail" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div>
+          <label class="block text-slate-100 text-xs mb-1">Password *</label>
+          <input type="password" name="artistpassword" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div>
+          <label class="block text-slate-100 text-xs mb-1">Phone *</label>
+          <input name="artistphone" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-slate-100 text-xs mb-1">Address *</label>
+          <textarea name="artistaddress" required rows="2" class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"></textarea>
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-slate-100 text-xs mb-1">Gender (optional)</label>
+          <input name="artistgender" class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div class="md:col-span-2 flex justify-end pt-2">
+          <button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-fuchsia-400 via-violet-400 to-sky-400 text-slate-950 font-semibold shadow-lg shadow-fuchsia-500/40 hover:translate-y-0.5 transition">Register as Artist</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="tab-customer" class="tab-panel hidden space-y-4 text-sm">
+      <form method="post" action="/register" class="grid md:grid-cols-2 gap-4">
+        <input type="hidden" name="role" value="customer"/>
+        <div class="md:col-span-2">
+          <label class="block text-slate-100 text-xs mb-1">Full name *</label>
+          <input name="customerName" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div>
+          <label class="block text-slate-100 text-xs mb-1">Login name *</label>
+          <input name="customerLoginName" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div>
+          <label class="block text-slate-100 text-xs mb-1">Email *</label>
+          <input type="email" name="customeremail" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div>
+          <label class="block text-slate-100 text-xs mb-1">Password *</label>
+          <input type="password" name="customerpassword" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div>
+          <label class="block text-slate-100 text-xs mb-1">Phone *</label>
+          <input name="customerphone" required class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-slate-100 text-xs mb-1">Address *</label>
+          <textarea name="customeraddress" required rows="2" class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"></textarea>
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-slate-100 text-xs mb-1">Gender (optional)</label>
+          <input name="customergender" class="w-full px-3 py-2.5 rounded-xl bg-slate-900/70 border border-slate-600 text-slate-100"/>
+        </div>
+        <div class="md:col-span-2 flex justify-end pt-2">
+          <button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-fuchsia-400 via-violet-400 to-sky-400 text-slate-950 font-semibold shadow-lg shadow-fuchsia-500/40 hover:translate-y-0.5 transition">Register as Customer</button>
+        </div>
+      </form>
+    </div>
+
+    <p id="msg" class="mt-4 text-[11px] text-amber-200"></p>
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const error = params.get('error');
+const tab = params.get('tab') || 'artist';
+const msg = document.getElementById('msg');
+
+if(error === 'missing') msg.textContent = 'Please fill all mandatory fields (*) for the selected role.';
+else if(error === 'exists') msg.textContent = 'Login name is already used. Please choose a different one.';
+else if(error === 'badkey') msg.textContent = 'Invalid admin secret key. Contact project guide to get the correct key.';
+else if(error === 'unknown') msg.textContent = 'Something went wrong. Please try again.';
+
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.tab-panel');
+function activate(name){
+  panels.forEach(p => p.classList.toggle('hidden', !p.id.endsWith(name)));
+  tabBtns.forEach(b => {
+    if(b.dataset.tab === name){ b.classList.add('tab-active'); }
+    else { b.classList.remove('tab-active'); }
+  });
+}
+tabBtns.forEach(b => b.addEventListener('click', () => activate(b.dataset.tab)));
+activate(tab);
+</script>
+
+</body>
+</html>
